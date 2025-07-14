@@ -11,15 +11,17 @@ print -n "Enter timezone (e.g., UTC, US/Pacific): "
 read TIMEZONE
 
 # Prompt for target disk
-while [[ $OS_INSTALL_DISK_SET == 0 ]]; do
-  read -e -p "Disk to install to? (? for help) " -i "$(diskinfo|head -n 2|tail -n 1|awk '{print $2}')" OS_INSTALL_TARGET
-  if [[ $OS_INSTALL_TARGET = '?' ]]; do
-    diskinfo
+OS_INSTALL_DISK_SET=0
+until [[ $OS_INSTALL_DISK_SET == 1 ]]; do
+  read -e -p "Disk to install to? (? for help) "
+  if [[ $OS_INSTALL_TARGET = '?' ]]; then
+    echo "$(diskinfo|head -n 2|tail -n 1|awk '{print $2}')"
     OS_INSTALL_DISK_SET=0
   else
     export OS_INSTALL_TARGET
     OS_INSTALL_DISK_SET=1
     export OS_INSTALL_DISK_SET
+  fi
 done
 
 # Write configuration file
