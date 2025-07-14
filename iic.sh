@@ -13,7 +13,7 @@ read TIMEZONE
 # Prompt for target disk
 OS_INSTALL_DISK_SET=0
 until [[ $OS_INSTALL_DISK_SET == 1 ]]; do
-  read -e -p "Disk to install to? (? for help) "
+  read OS_INSTALL_TARGET?"Disk to install to? (? for help) "
   if [[ $OS_INSTALL_TARGET = '?' ]]; then
     echo "$(diskinfo|head -n 2|tail -n 1|awk '{print $2}')"
     OS_INSTALL_DISK_SET=0
